@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Treinamento Excel Básico - Logística Pague Menos</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --pague-menos-red: #E30613;
+            --pague-menos-blue: #003399;
+            --pague-menos-dark-blue: #001A4D;
+            --bg-light: #F4F6F9;
+            --text-dark: #1E2229;
+            --white: #FFFFFF;
+            --accent-green: #28A745;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+
+        header {
+            width: 100%;
+            max-width: 1100px;
+            background: linear-gradient(135deg, var(--pague-menos-blue), var(--pague-menos-dark-blue));
+            border-bottom: 5px solid var(--pague-menos-red);
+            color: var(--white);
+            padding: 25px 40px;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        header p {
+            font-size: 0.95rem;
+            opacity: 0.85;
+            margin-top: 5px;
+        }
+
+        .badge-red {
+            background-color: var(--pague-menos-red);
+            color: var(--white);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1100px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 25px;
+        }
+
+        .card {
+            background: var(--white);
+            border-radius: 10px;
+            border-top: 4px solid var(--pague-menos-blue);
+            padding: 25px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+
+        .card.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #F0F2F5;
+            padding-bottom: 10px;
+        }
+
+        .card-header .num {
+            background-color: var(--pague-menos-red);
+            color: var(--white);
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 12px;
+            font-size: 1rem;
+        }
+
+        .card-header h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.2rem;
+            color: var(--pague-menos-blue);
+        }
+
+        p, li {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: #4A5568;
+        }
+
+        ul {
+            list-style: none;
+            margin-top: 10px;
+        }
+
+        ul li {
+            position: relative;
+            padding-left: 20px;
+            margin-bottom: 8px;
+        }
+
+        ul li::before {
+            content: "•";
+            color: var(--pague-menos-red);
+            font-weight: bold;
+            font-size: 1.2rem;
+            position: absolute;
+            left: 0;
+            top: -2px;
+        }
+
+        .highlight-box {
+            background-color: #EBF3FF;
+            border-left: 4px solid var(--pague-menos-blue);
+            padding: 12px 15px;
+            margin: 15px 0;
+            border-radius: 0 6px 6px 0;
+        }
+
+        .formula-tag {
+            font-family: 'Courier New', Courier, monospace;
+            background-color: #2D3748;
+            color: #63B3ED;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        /* Tabela Estilizada */
+        .excel-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            font-size: 0.9rem;
+        }
+
+        .excel-table th {
+            background-color: var(--pague-menos-blue);
+            color: var(--white);
+            text-align: left;
+            padding: 10px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.85rem;
+        }
+
+        .excel-table td {
+            padding: 10px;
+            border-bottom: 1px solid #E2E8F0;
+        }
+
+        .excel-table tr:hover {
+            background-color: #F8FAFC;
+        }
+
+        .status-comprar {
+            background-color: #FED7D7;
+            color: #C53030;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 0.8rem;
+        }
+
+        .status-ok {
+            background-color: #C6F6D5;
+            color: #22543D;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 0.8rem;
+        }
+
+        /* Timeline de Aprendizado */
+        .timeline {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .day-box {
+            background: #F7FAFC;
+            border: 1px solid #E2E8F0;
+            border-top: 3px solid var(--pague-menos-red);
+            padding: 15px;
+            border-radius: 6px;
+        }
+
+        .day-box h4 {
+            color: var(--pague-menos-blue);
+            font-family: 'Montserrat', sans-serif;
+            margin-bottom: 5px;
+        }
+
+        footer {
+            margin-top: 40px;
+            text-align: center;
+            font-size: 0.85rem;
+            color: #A0AEC0;
+            padding-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div>
+            <h1>Excel para Logística</h1>
+            <p>Guia de Treinamento e Fundamentos Práticos</p>
+        </div>
+        <span class="badge-red">Nível: 0</span>
+    </header>
+
+    <div class="container">
+
+        <!-- CARD 1 -->
+        <div class="card">
+            <div class="card-header">
+                <div class="num">1</div>
+                <h2>Anatomia da Planilha</h2>
+            </div>
+            <p>Antes de aplicar qualquer fórmula, pense na planilha como o layout físico de um armazém de distribuição:</p>
+            <ul>
+                <li><strong>Coluna (Letras - A, B, C...):</strong> As <em>ruas</em> e corredores do seu armazém.</li>
+                <li><strong>Linha (Números - 1, 2, 3...):</strong> Os <em>andares e posições</em> da prateleira.</li>
+                <li><strong>Célula (Exemplo: A1):</strong> O <em>endereço final</em> ou a caixa exata onde a informação fica guardada.</li>
+            </ul>
+        </div>
+
+        <!-- CARD 2 -->
+        <div class="card">
+            <div class="card-header">
+                <div class="num">2</div>
+                <h2>Regra de Ouro dos Cálculos</h2>
+            </div>
+            <div class="highlight-box">
+                <strong>Regra nº 1:</strong> Toda fórmula no Excel <u>OBRIGATORIAMENTE</u> começa com o sinal de igual (<span class="formula-tag">=</span>).
+            </div>
+            <p>Se você digitar <code>10+5</code>, o programa entende como texto. Digitando <code>=10+5</code>, o cálculo é processado.</p>
+            <ul style="margin-top:15px;">
+                <li><strong>Somar:</strong> <span class="formula-tag">=A1 + B1</span> (Ex: Estoque Antigo + Entrada)</li>
+                <li><strong>Subtrair:</strong> <span class="formula-tag">=A1 - B1</span> (Ex: Estoque Atual - Saída)</li>
+                <li><strong>Multiplicar:</strong> <span class="formula-tag">=A1 * B1</span> (Ex: Qtd de Caixas * Peso Unitário)</li>
+                <li><strong>Dividir:</strong> <span class="formula-tag">=A1 / B1</span> (Ex: Custo Total / Total de Itens)</li>
+            </ul>
+        </div>
+
+        <!-- CARD 3 (FULL WIDTH) -->
+        <div class="card full-width">
+            <div class="card-header">
+                <div class="num">3</div>
+                <h2>Exemplo Prático: Controle de Estoque Operacional</h2>
+            </div>
+            <p>Estrutura básica para monitoramento de rotas, movimentação e necessidade de compra:</p>
+
+            <table class="excel-table">
+                <thead>
+                    <tr>
+                        <th>A (Código)</th>
+                        <th>B (Produto)</th>
+                        <th>C (Entrada)</th>
+                        <th>D (Saída)</th>
+                        <th>E (Estoque Atual)</th>
+                        <th>F (Status)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1001</td>
+                        <td>Caixa Papelão</td>
+                        <td>100</td>
+                        <td>30</td>
+                        <td><span class="formula-tag">=C2-D2</span> (70)</td>
+                        <td><span class="status-ok">OK</span></td>
+                    </tr>
+                    <tr>
+                        <td>1002</td>
+                        <td>Fita Adesiva 45mm</td>
+                        <td>50</td>
+                        <td>42</td>
+                        <td><span class="formula-tag">=C3-D3</span> (8)</td>
+                        <td><span class="status-comprar">COMPRAR</span></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="highlight-box" style="margin-top: 20px;">
+                <p><strong>Lógica das Fórmulas Utilizadas:</strong></p>
+                <p>• <strong>Estoque Atual (Coluna E):</strong> <span class="formula-tag">=C2-D2</span> — Subtrai a saída do total de entradas.</p>
+                <p>• <strong>Alerta Automático (Coluna F):</strong> <span class="formula-tag">=SE(E2&lt;20; "COMPRAR"; "OK")</span> — Retorna "COMPRAR" se o estoque for menor que 20 unidades; caso contrário, exibe "OK".</p>
+            </div>
+        </div>
+
+        <!-- CARD 4 -->
+        <div class="card">
+            <div class="card-header">
+                <div class="num">4</div>
+                <h2>3 Recursos Mágicos para Iniciantes</h2>
+            </div>
+            <ul>
+                <li><strong>A. Ajuste com Duplo Clique:</strong> Se o texto ficar cortado ou aparecer <code>#####</code>, dê um duplo clique na linha divisória entre o topo das colunas para ajustar a largura automaticamente.</li>
+                <li><strong>B. Alça de Preenchimento:</strong> Arraste o pequeno quadrado verde no canto inferior direito de uma célula selecionada para replicar a fórmula nas linhas abaixo.</li>
+                <li><strong>C. Filtro Dinâmico (<span class="formula-tag">Ctrl + Shift + L</span>):</strong> Selecione o cabeçalho, ative o filtro na guia <em>Dados</em> e isole apenas as pendências ou produtos em estado crítico.</li>
+            </ul>
+        </div>
+
+        <!-- CARD 5 (TIMELINE) -->
+        <div class="card">
+            <div class="card-header">
+                <div class="num">5</div>
+                <h2>Trilha de Aprendizado Recomendada</h2>
+            </div>
+            <p>Siga esta progressão de 4 dias para dominar os fundamentos:</p>
+            <div class="timeline">
+                <div class="day-box">
+                    <h4>Dia 1</h4>
+                    <p>Monte uma planilha simples com 5 itens e pratique contas manuais (+ e -).</p>
+                </div>
+                <div class="day-box">
+                    <h4>Dia 2</h4>
+                    <p>Aplique a função <span class="formula-tag">=SOMA(C2:C10)</span> para consolidar totais das colunas.</p>
+                </div>
+                <div class="day-box">
+                    <h4>Dia 3</h4>
+                    <p>Ative o Filtro e pratique ocultar/exibir dados específicos.</p>
+                </div>
+                <div class="day-box">
+                    <h4>Dia 4</h4>
+                    <p>Utilize a função <span class="formula-tag">=SE(...)</span> para automatizar alertas operacionais.</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        <p>Material de Treinamento - Desenvolvido por Luis Roberto dos Anjos Braga
+Prevenção de Perdas - CD04 Pague Menos</p>
+    </footer>
+
+</body>
+</html>
